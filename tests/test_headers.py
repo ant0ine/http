@@ -4,18 +4,79 @@ from fluffyhttp.headers import Headers
 
 class TestHeaders(TestCase):
 
+    ct_headers = (
+        'Content-Type', 'application/json'
+    )
+
     def test_simple(self):
-        headers = {
-            'Content-Type': 'application/json'
-        }
+        headers = Headers([self.ct_headers])
+        self.assertTrue(headers)
+        self.assertEqual(headers.content_type, 'application/json')
 
-        f_headers = Headers(headers)
-        self.assertTrue(f_headers)
+    def test_normalization(self):
+        headers = Headers([self.ct_headers])
 
-        self.assertTrue(f_headers.get('Content-Type'))
-        self.assertTrue(f_headers.get('content-type'))
+        self.assertTrue(headers.get('Content-Type'))
+        self.assertTrue(headers.get('content-type'))
+        self.assertEqual(headers.get('content-type'), 'application/json')
 
-        f_headers['User-Agent'] = 'fluffy'
-        self.assertTrue(f_headers.get('User-Agent'))
-        self.assertTrue(f_headers.get('user-agent'))
+        headers.add('User-Agent', 'fluffy')
+        self.assertTrue(headers.get('User-Agent'))
+        self.assertTrue(headers.get('user-agent'))
+        self.assertEqual(headers.get('user-agent'), 'fluffy')
+        
+    def test_remove(self):
+        headers = Headers([self.ct_headers])
+        headers.remove('Content-Type')
+        ct = headers.content_type
+        self.assertFalse(ct)
 
+    def test_multi(self):
+        headers = Headers()
+        self.assertTrue(headers)
+
+        headers.add('X-Foo', 'bar')
+        headers.add('X-Foo', 'baz')
+        
+        self.assertEqual(headers.get('X-Foo'), 'bar')
+        self.assertEqual(headers.get_all('X-Foo'), ['bar', 'baz'])
+
+        headers = Headers()
+        headers.add('X-Foo', 'bar', 'baz', 'foo')
+        self.assertEqual(headers.get_all('X-Foo'), ['bar', 'baz', 'foo'])
+        self.assertEqual(headers.get_all('x-fOo'), ['bar', 'baz', 'foo'])
+
+    def test_content(self):
+        headers = Headers([self.ct_headers])
+        self.assertFalse(headers.content_is_text)
+
+        def test_ct(ct, should_be):
+            headers.remove('Content-Type')
+            headers.add('Content-Type', ct)
+            method = getattr(headers, should_be)
+            self.assertTrue(method)
+
+        test_ct('text/html', 'content_is_text')
+        test_ct('application/xhtml+xml', 'content_is_xhtml')
+        test_ct('text/xml', 'content_is_xml')
+        test_ct('application/xml', 'content_is_xml')
+
+    def test_date_header(self):
+        pass
+
+    def test_str(self):
+        headers = Headers([self.ct_headers])
+        pass
+
+    def test_iteritems(self):
+        headers = Headers([self.ct_headers])
+
+    def test_set(self):
+        headers = Headers()
+        headers.add('Content-Type', 'application/json')
+        headers.set('Content-Type', 'application/xml')
+        self.assertEqual(headers.get('Content-Type'), 'application/xml')
+
+        headers = Headers()
+        headers.set('Content-Type', 'application/xml')
+        self.assertEqual(headers.get('Content-Type'), 'application/xml')

@@ -23,14 +23,15 @@ class Client(object):
             self.agent = agent
 
         if len(default_headers) == 0:
-            default_headers = {
-                'Connection': 'keep-alive',
-            }
-
-        if 'User-Agent' not in default_headers:
-            default_headers['User-Agent'] = self.agent
+            default_headers = [(
+                'Connection', 'keep-alive',
+            )]
 
         self._default_headers = Headers(default_headers)
+
+        if 'User-Agent' not in default_headers:
+            self._default_headers.add('User-Agent', self.agent)
+            self._default_headers.add('User-Agent', 'foooo')
 
         self._poolmanager = PoolManager(
             maxsize=keep_alive

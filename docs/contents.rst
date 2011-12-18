@@ -9,3 +9,4 @@
    client
    request
    response
+   headers
