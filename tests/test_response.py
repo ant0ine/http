@@ -13,6 +13,9 @@ class TestClient(TestCase):
         self.assertEqual(response.message, 'OK')
         self.assertEqual(response.status_line, '200 OK')
 
+        response = Response(status='200', message='OK')
+        self.assertEqual(response.status, 200)
+
     def test_request(self):
         request = Request('GET', 'http://foobar')
         response = Response(status=200, message='OK', headers={},

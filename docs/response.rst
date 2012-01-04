@@ -3,6 +3,8 @@
 Response
 ========
 
+.. module:: fluffyhttp.response
+
 Synopsis
 --------
 
@@ -20,29 +22,5 @@ Interface
 
 :class:`Response` instances have the following methods:
 
-.. attribute:: Response.status
-
-.. attribute:: Response.headers
-
-.. attribute:: Response.content
-
-.. attribute:: Response.reason
-
-.. attribute:: Response.content_is_text
-
-.. attribute:: Response.content_is_xml
-
-.. attribute:: Response.content_is_xhtml
-
-.. method:: Response.is_success()
-
-.. method:: Response.is_redirect()
-
-.. method:: Response.header()
-
-.. method:: Response.last_modified()
-
-.. method:: Response.date()
-
-.. method:: Response.expires()
-
+.. autoclass:: Response([defaults])
+   :members:
