@@ -1,4 +1,5 @@
 from date import Date
+from datetime import datetime
 import re
 
 
@@ -135,6 +136,7 @@ class Headers(object):
             if prev_key.lower() == lkey:
                 self._headers[idx] = (key, value)
                 break
+        self._headers.append([key, value])
 
     def remove(self, key):
         """remove a header
@@ -145,7 +147,7 @@ class Headers(object):
 
     @property
     def content_type(self):
-        """Returns the value for the *Content-Type* header
+        """Property to get the value for the *Content-Type* header
 
         >>> h = Headers([('Content-Type', 'application/json')])
         >>> h.content_type
@@ -169,7 +171,7 @@ class Headers(object):
 
     @property
     def content_is_text(self):
-        """This is an helper that will return True if the *Content-Type* header is set to *text*
+        """Property that will return True if the *Content-Type* header is set to *text*
 
         >>> h = Headers([('Content-Type', 'text/x-yaml')])
         >>> h.content_is_text
@@ -187,7 +189,7 @@ class Headers(object):
 
     @property
     def content_is_xhtml(self):
-        """This is an helper that will return True if the *Content-Type* header is set to *xhtml*
+        """Property that will return True if the *Content-Type* header is set to *xhtml*
 
         >>> h = Headers([('Content-Type', 'application/xhtml+xml')])
         >>> h.content_is_xhtml
@@ -207,7 +209,7 @@ class Headers(object):
 
     @property
     def content_is_xml(self):
-        """This is an helper that will return True if the *Content-Type* header is set to *xml*
+        """Property that will return True if the *Content-Type* header is set to *xml*
 
         >>> h = Headers([('Content-Type', 'application/xml')])
         >>> h.content_is_xml
@@ -227,73 +229,124 @@ class Headers(object):
             return True
         return False
 
-    def last_modified(self, date=None):
-        """Get or set the value for the *Last-Modified* header
+    @property
+    def last_modified(self):
+        """Property to get the epoch for the *Last-Modified* header, and set the value of the header
 
         >>> headers = Headers()
-        >>> headers.if_modified_since(datetime(2011, 12, 1, 0, 0))
+        >>> headers.last_modified = datetime(2011, 12, 1, 0, 0)
+        >>> print headers.last_modified
+        1322726400
+
+        :param date: datetime object
+        :return: int
+        """
+
+        return self._get_date_header('Last-Modified')
+
+    @last_modified.setter
+    def last_modified(self, date):
+        return self._set_date_header('Last-Modified', date)
+
+    @property
+    def date(self):
+        """Property to get the epoch for the *Date* header, and set the value of the header
+
+        >>> headers = Headers()
+        >>> headers.date = datetime(2011, 12, 1, 0, 0)
+        >>> print headers.date
+        1322726400
+
+        :param date: datetime object
+        :return: int
+        """
+
+        return self._get_date_header('Date')
+
+    @date.setter
+    def date(self, date):
+        return self._set_date_header('Date', date)
+
+    @property
+    def expires(self):
+        """Property to get the epoch for the *Expires* header, and set the value of the header
+
+        >>> headers = Headers()
+        >>> headers.expires = datetime(2011, 12, 1, 0, 0)
+        >>> print headers.expires
+        1322726400
 
         :param date: datetime object
         :return: string
         """
 
-        return self.date_header('Last-Modified', date)
+        return self._get_date_header('Expires')
 
-    def date(self, date=None):
-        """Get or set the value for the *Date* header
+    @expires.setter
+    def expires(self, date):
+        return self._set_date_header('Expires', date)
 
-        >>> headers = Headers()
-        >>> headers.date(2011, 12, 1, 0, 0))
-
-        :param date: datetime object
-        :return: string
-        """
-
-        return self.date_header('Date', date)
-
-    def expires(self, date=None):
-        """Get or set the value for the *Expires* header
+    @property
+    def if_modified_since(self):
+        """Property to get the epoch for the *If-Modified-Since* header, and set the value of the header
 
         >>> headers = Headers()
-        >>> headers.expires(2011, 12, 1, 0, 0))
+        >>> headers.if_modified_since = datetime(2011, 12, 1, 0, 0)
+        >>> print headers.if_modified_since
+        1322726400
 
         :param date: datetime object
-        :return: string
+        :return: int
         """
 
-        return self.date_header('Expires', date)
+        return self._get_date_header('If-Modified-Since')
 
-    def if_modified_since(self, date=None):
-        """Get or set the value for the *If-Modified-Since* header
+    @if_modified_since.setter
+    def if_modified_since(self, date):
+        return self._set_date_header('If-Modified-Since', date)
+
+    @property
+    def if_unmodified_since(self):
+        """Property to get the epoch for the *If-Unmodified-Since* header, and set the value of the header
 
         >>> headers = Headers()
-        >>> headers.if_modified_since(2011, 12, 1, 0, 0))
+        >>> headers.if_unmodified_since = datetime(2011, 12, 1, 0, 0)
+        >>> print headers.if_unmodified_since
+        1322726400
 
         :param date: datetime object
-        :return: string
+        :return: int
         """
 
-        return self.date_header('If-Modified-Since', date)
+        return self._get_date_header('If-Unmodified-Since')
 
-    def if_unmodified_since(self, date=None):
-        """Get or set the value for the *If-Unmodified-Since* header
+    @if_unmodified_since.setter
+    def if_unmodified_since(self, date):
+        return self._set_date_header('If-Unmodified-Since', date)
 
-        >>> headers = Headers()
-        >>> headers.if_unmodified_since(2011, 12, 1, 0, 0))
+    def _get_date_header(self, key):
+        # XXX for now returns the epoch, not sure about that, maybe the datetime object would be better ?
+        value = self.get(key)
+        if value is None:
+            return None
 
-        :param date: datetime object
-        :return: string
-        """
-
-        return self.date_header('If-Unmodified-Since', date)
-
-    def date_header(self, key, date=None):
-        if date:
-            # XXX check
-            date = Date.time2str(date)
-            self.set(key, date)
-        else:
-            value = self.get(key)
-            if value is None:
-                return None
+        if isinstance(value, str):
             return Date.str2time(value)
+        elif isinstance(value, int):
+            return value
+        elif isinstance(value, datetime):
+            return Date.time2str(value)
+        else:
+            raise ValueError("date is of type <{type}> but can only be an instance of string, int or a datetime object".format(type=type(date)))
+
+    def _set_date_header(self, key, date):
+        # XXX for now we only document that the helpers can accept a datetime object, but you can also pass a string and a int. Let's see in the futur if this is usefull and document all the behavior
+        if isinstance(date, str):
+            date = Date.str2time(date)
+        elif isinstance(date, int):
+            date = Date.int2time(date)
+        elif isinstance(date, datetime):
+            date = Date.time2str(date)
+        else:
+            raise ValueError("date is of type <{type}> but can only be an instance of string, int or a datetime object".format(type=type(date)))
+        self.set(key, date)

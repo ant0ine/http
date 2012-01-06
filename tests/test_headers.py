@@ -1,5 +1,6 @@
 from unittest2 import TestCase
 from fluffyhttp.headers import Headers
+from datetime import datetime
 
 
 class TestHeaders(TestCase):
@@ -62,11 +63,17 @@ class TestHeaders(TestCase):
         test_ct('application/xml', 'content_is_xml')
 
     def test_date_header(self):
-        pass
+        headers = Headers([self.ct_headers])
+        now = datetime(2011, 12, 12, 12, 0, 0)
+        headers.if_unmodified_since = now
+        self.assertEqual(headers.if_unmodified_since, 1323720000)
+        self.assertEqual(headers.get('If-Unmodified-Since'), 'Mon, 12 Dec 2011 12:00:00 GMT')
+
+        headers.if_modified_since = 'Mon, 12 Dec 2011 12:00:00 GMT'
+        self.assertEqual(headers.if_modified_since, 1323720000)
 
     def test_str(self):
         headers = Headers([self.ct_headers])
-        pass
 
     def test_iteritems(self):
         headers = Headers([self.ct_headers])
