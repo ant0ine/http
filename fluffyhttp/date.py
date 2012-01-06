@@ -19,3 +19,11 @@ class Date:
         month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
              "Oct", "Nov", "Dec"][dt.month - 1]
         return "%s, %02d %s %04d %02d:%02d:%02d GMT" % (weekday, dt.day, month, dt.year, dt.hour, dt.minute, dt.second)
+
+    @classmethod
+    def int2time(cls, epoch):
+        return datetime.fromtimestamp(epoch)
+
+    @classmethod
+    def int2str(cls, epoch):
+        return Date.time2str(Date.int2time(epoch))
