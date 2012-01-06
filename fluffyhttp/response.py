@@ -25,18 +25,12 @@ class Response(object):
 
         self._headers = headers
 
-        methods_from_headers = ['last_modified', 'date', 'expires', 'content_length',
-        'content_is_text', 'content_is_xml', 'content_is_xhtml']
-
-        for m in methods_from_headers:
-            setattr(self.__class__, m, getattr(headers, m))
-
         self._content = content
         self._request = request
 
     @property
     def status(self):
-        """Returns the HTTP status
+        """Property to get the HTTP status
 
         :return: int
         """
@@ -45,7 +39,7 @@ class Response(object):
 
     @property
     def is_info(self):
-        """This method indicate if the response was informational
+        """Property that indicate if the response was informational
 
         :return: boolean
         """
@@ -55,7 +49,7 @@ class Response(object):
 
     @property
     def is_success(self):
-        """This method indicate if the response was success
+        """Property that indicate if the response was success
 
         :return: boolean
         """
@@ -65,7 +59,7 @@ class Response(object):
 
     @property
     def is_redirect(self):
-        """This method indicate if the response was redirect
+        """Property that indicate if the response was redirect
 
         :return: boolean
         """
@@ -75,7 +69,7 @@ class Response(object):
 
     @property
     def is_client_error(self):
-        """This method indicate if the response was a client error
+        """Property that indicate if the response was a client error
 
         :return: boolean
         """
@@ -85,7 +79,7 @@ class Response(object):
 
     @property
     def is_server_error(self):
-        """This method indicate if the response was a client server
+        """Property that indicate if the response was a client server
 
         :return: boolean
         """
@@ -94,7 +88,7 @@ class Response(object):
     
     @property
     def is_error(self):
-        """This method indicate if the response was an error
+        """Property that indicate if the response was an error
 
         :return: boolean
         """
@@ -104,7 +98,7 @@ class Response(object):
 
     @property
     def base(self):
-        """Returns the base URI for this response"""
+        """Property to get the base URI for this response"""
         if self.header('Content-Base'):
             return self.header('Content-Base')
         if self.header('Content-Location'):
@@ -114,24 +108,59 @@ class Response(object):
 
     @property
     def request(self):
-        """Returns the request object that caused that response"""
+        """Property to get the request object that caused that response"""
         return self._request
 
     @property
     def content(self):
-        """Returns the content"""
+        """Property to get the actual content of the response"""
         return self._content
 
     def header(self, name):
-        """Returns the value for a given header"""
+        """Method to get the value for a given header"""
         return self._headers.get(name)
 
     @property
     def headers(self):
-        """Returns a Headers object"""
+        """Property to get the Headers object"""
         return self._headers
 
     @property
     def status_line(self):
-        """Returns the string '<code> <message>'"""
+        """Property to get the string '<code> <message>'"""
         return "{0} {1}".format(self.status, self.message)
+
+    @property
+    def last_modified(self):
+        """Property to get the epoch for the *Last-Modified* header"""
+        return self._headers.last_modified
+
+    @property
+    def date(self):
+        """Property to get the epoch for the *Date* header"""
+        return self._headers.date
+
+    @property
+    def expires(self):
+        """Property to get the epoch for the *Expires* header"""
+        return self._headers.expires
+
+    @property
+    def content_length(self):
+        """Property to get value for the *Content-Length* header"""
+        return self._headers.content_length
+
+    @property
+    def content_is_text(self):
+        """Property that will return True if the *Content-Type* header is set to *text*"""
+        return self._headers.content_is_text
+
+    @property
+    def content_is_xml(self):
+        """Property that will return True if the *Content-Type* header is set to *xml*"""
+        return self._headers.content_is_xml
+
+    @property
+    def content_is_xhtml(self):
+        """Property that will return True if the *Content-Type* header is set to *xhtml*"""
+        return self._headers.content_is_xhtml

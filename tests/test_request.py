@@ -43,6 +43,5 @@ class TestClient(TestCase):
 
     def test_date_headers(self):
         request = Request('GET', 'http')
-        now = datetime(2011, 12, 12, 12, 0, 0)
-        request.if_modified_since(now)
+        request.if_modified_since = datetime(2011, 12, 12, 12, 0, 0)
         self.assertEqual(request._headers.get('If-Modified-Since'), 'Mon, 12 Dec 2011 12:00:00 GMT')
