@@ -15,7 +15,7 @@ class Request(object):
     :param content: body
     """
 
-    def __init__(self, method, url, headers=Headers(), content=None):
+    def __init__(self, method, url, headers=None, content=None):
         # XXX no content on GET / DELETE ?
         self.method = method
         self.content = content
@@ -24,8 +24,11 @@ class Request(object):
             url = Url(url)
         self.url = url
 
-        if not isinstance(headers, Headers):
+        if headers is None:
+            headers = Headers()
+        elif not isinstance(headers, Headers):
             headers = Headers(headers)
+
         self._headers = headers
 
     @property
