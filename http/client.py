@@ -82,7 +82,7 @@ class Client(object):
             f = open(file, 'w')
             f.write(res.content)
             f.close()
-            last_modified = int(time.mktime(res.last_modified.timetuple()))
+            last_modified = Date.time2epoch(res.last_modified)
             if last_modified:
                 os.utime(file, (last_modified, last_modified))
 

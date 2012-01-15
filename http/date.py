@@ -24,6 +24,10 @@ class Date:
         return "%s, %02d %s %04d %02d:%02d:%02d GMT" % (weekday, dt.day, month, dt.year, dt.hour, dt.minute, dt.second)
 
     @classmethod
+    def time2epoch(cls, date):
+        return int(time.mktime(date.timetuple()))
+
+    @classmethod
     def epoch2time(cls, epoch):
         return datetime.fromtimestamp(epoch)
 
