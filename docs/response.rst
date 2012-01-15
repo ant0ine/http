@@ -3,7 +3,7 @@
 Response
 ========
 
-.. module:: fluffyhttp.response
+.. module:: http.response
 
 Synopsis
 --------

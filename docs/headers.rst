@@ -3,7 +3,7 @@
 Headers
 =======
 
-.. module:: fluffyhttp.headers
+.. module:: http.headers
 
 Synopsis
 --------
