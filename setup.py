@@ -1,16 +1,13 @@
 from setuptools import setup
 from os.path import join, dirname
 
-try:
-    long_description = open(join(dirname(__file__), 'README.rst')).read()
-except Exception:
-    long_description = None
-
 setup(
     name='http',
     version='0.1.0',
-    description='HTTP library',
+    description='a HTTP library for Python',
     author='Franck Cuny',
     author_email='franck.cuny@gmail.com',
-    long_description=long_description,
+    packages=['http'],
+    provides=['http'],
+    requires=['fluffyurl'],
 )
