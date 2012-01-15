@@ -49,12 +49,6 @@ class Headers(object):
 
     def iteritems(self):
         """ return an iterator of headers
-        
-        >>> h = Headers([('Content-Type', 'application/json')])
-        >>> for k, v in h.iteritems():
-        ...     print k
-        ...
-        'Content-Type'
 
         :return: iterator of headers
         """
@@ -66,7 +60,7 @@ class Headers(object):
         return [(k, str(v)) for k, v in self._headers] 
 
     def add(self, key, *values):
-        """add a new header and a value
+        """add a new header and one or multiple values
 
         >>> headers = Headers()
         >>> headers.add('Content-Type', 'application/json')
@@ -82,8 +76,6 @@ class Headers(object):
     def get(self, key):
         """get the value for a given header
 
-        >>> headers = Headers()
-        >>> headers.add('Content-Type', 'application/json')
         >>> headers.get('Content-Type')
         'application/json'
 
@@ -92,6 +84,8 @@ class Headers(object):
         """
 
         value = self.__getitem__(key)
+        if isinstance(value, datetime):
+            value = Date.time2str(value)
         return value
     
     def get_all(self, key):
@@ -140,6 +134,7 @@ class Headers(object):
 
     def remove(self, key):
         """remove a header
+
         :param: header's name
         """
 
@@ -162,9 +157,7 @@ class Headers(object):
     def content_length(self):
         """Returns the value for the *Content-Length* header
 
-        >>> h = Headers([('Content-Length', '23')])
-        >>> h.content_length
-        '23'
+        :return: int
         """
 
         return self.get('Content-Length')
@@ -172,10 +165,6 @@ class Headers(object):
     @property
     def content_is_text(self):
         """Property that will return True if the *Content-Type* header is set to *text*
-
-        >>> h = Headers([('Content-Type', 'text/x-yaml')])
-        >>> h.content_is_text
-        True
 
         :return: boolean
         """
@@ -190,10 +179,6 @@ class Headers(object):
     @property
     def content_is_xhtml(self):
         """Property that will return True if the *Content-Type* header is set to *xhtml*
-
-        >>> h = Headers([('Content-Type', 'application/xhtml+xml')])
-        >>> h.content_is_xhtml
-        True
 
         :return: boolean
         """
@@ -210,10 +195,6 @@ class Headers(object):
     @property
     def content_is_xml(self):
         """Property that will return True if the *Content-Type* header is set to *xml*
-
-        >>> h = Headers([('Content-Type', 'application/xml')])
-        >>> h.content_is_xml
-        True
 
         :return: boolean
         """
@@ -235,11 +216,11 @@ class Headers(object):
 
         >>> headers = Headers()
         >>> headers.last_modified = datetime(2011, 12, 1, 0, 0)
-        >>> print headers.last_modified
-        1322726400
+        >>> print type(headers.last_modified)
+        <type 'datetime.datetime'>
 
         :param date: datetime object
-        :return: int
+        :return: datetime
         """
 
         return self._get_date_header('Last-Modified')
@@ -252,13 +233,8 @@ class Headers(object):
     def date(self):
         """Property to get the epoch for the *Date* header, and set the value of the header
 
-        >>> headers = Headers()
-        >>> headers.date = datetime(2011, 12, 1, 0, 0)
-        >>> print headers.date
-        1322726400
-
         :param date: datetime object
-        :return: int
+        :return: datetime
         """
 
         return self._get_date_header('Date')
@@ -271,13 +247,8 @@ class Headers(object):
     def expires(self):
         """Property to get the epoch for the *Expires* header, and set the value of the header
 
-        >>> headers = Headers()
-        >>> headers.expires = datetime(2011, 12, 1, 0, 0)
-        >>> print headers.expires
-        1322726400
-
         :param date: datetime object
-        :return: string
+        :return: datetime
         """
 
         return self._get_date_header('Expires')
@@ -290,13 +261,8 @@ class Headers(object):
     def if_modified_since(self):
         """Property to get the epoch for the *If-Modified-Since* header, and set the value of the header
 
-        >>> headers = Headers()
-        >>> headers.if_modified_since = datetime(2011, 12, 1, 0, 0)
-        >>> print headers.if_modified_since
-        1322726400
-
         :param date: datetime object
-        :return: int
+        :return: datetime
         """
 
         return self._get_date_header('If-Modified-Since')
@@ -309,13 +275,8 @@ class Headers(object):
     def if_unmodified_since(self):
         """Property to get the epoch for the *If-Unmodified-Since* header, and set the value of the header
 
-        >>> headers = Headers()
-        >>> headers.if_unmodified_since = datetime(2011, 12, 1, 0, 0)
-        >>> print headers.if_unmodified_since
-        1322726400
-
         :param date: datetime object
-        :return: int
+        :return: datetime
         """
 
         return self._get_date_header('If-Unmodified-Since')
@@ -325,28 +286,28 @@ class Headers(object):
         return self._set_date_header('If-Unmodified-Since', date)
 
     def _get_date_header(self, key):
-        # XXX for now returns the epoch, not sure about that, maybe the datetime object would be better ?
-        value = self.get(key)
+        value = self.__getitem__(key)
         if value is None:
             return None
 
         if isinstance(value, str):
             return Date.str2time(value)
         elif isinstance(value, int):
-            return value
+            return Date.epoch2time(value)
         elif isinstance(value, datetime):
-            return Date.time2str(value)
+            return value
         else:
-            raise ValueError("date is of type <{type}> but can only be an instance of string, int or a datetime object".format(type=type(date)))
+            print value
+            raise ValueError("date is of type <{type}> but can only be an instance of string, int or a datetime object".format(type=type(value)))
 
     def _set_date_header(self, key, date):
         # XXX for now we only document that the helpers can accept a datetime object, but you can also pass a string and a int. Let's see in the futur if this is usefull and document all the behavior
-        if isinstance(date, str):
-            date = Date.str2time(date)
+        if isinstance(date, datetime):
+            date = date
         elif isinstance(date, int):
-            date = Date.int2time(date)
-        elif isinstance(date, datetime):
-            date = Date.time2str(date)
+            date = Date.epoch2time(date)
+        elif isinstance(date, str):
+            date = Date.str2time(date)
         else:
             raise ValueError("date is of type <{type}> but can only be an instance of string, int or a datetime object".format(type=type(date)))
         self.set(key, date)

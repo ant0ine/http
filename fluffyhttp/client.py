@@ -1,11 +1,13 @@
 from request import Request
 from response import Response
 from headers import Headers
+from date import Date
 from handlers import Handlers
 from fluffyurl.url import Url
 from urllib3.poolmanager import PoolManager
 from urllib3 import connectionpool, poolmanager
 import os
+import time
 
 
 class Client(object):
@@ -80,7 +82,7 @@ class Client(object):
             f = open(file, 'w')
             f.write(res.content)
             f.close()
-            last_modified = res.last_modified
+            last_modified = int(time.mktime(res.last_modified.timetuple()))
             if last_modified:
                 os.utime(file, (last_modified, last_modified))
 

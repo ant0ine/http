@@ -7,12 +7,15 @@ class Date:
 
     @classmethod
     def str2time(cls, date):
-        t = int(time.mktime(email.utils.parsedate(date)))
-        return t
+        return Date.epoch2time(Date.str2epoch(date))
+
+    @classmethod
+    def str2epoch(cls, date):
+        return int(time.mktime(email.utils.parsedate(date)))
 
     @classmethod
     def time2str(cls, dt):
-        if (isinstance(dt, datetime) is False):
+        if isinstance(dt, datetime) is False:
             raise Exception("date is not a datetime object")
 
         weekday = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dt.weekday()]
@@ -21,9 +24,9 @@ class Date:
         return "%s, %02d %s %04d %02d:%02d:%02d GMT" % (weekday, dt.day, month, dt.year, dt.hour, dt.minute, dt.second)
 
     @classmethod
-    def int2time(cls, epoch):
+    def epoch2time(cls, epoch):
         return datetime.fromtimestamp(epoch)
 
     @classmethod
-    def int2str(cls, epoch):
-        return Date.time2str(Date.int2time(epoch))
+    def epoch2str(cls, epoch):
+        return Date.time2str(Date.epoch2time(epoch))

@@ -2,6 +2,7 @@ from unittest2 import TestCase
 from fluffyhttp.response import Response
 from fluffyhttp.request import Request
 from fluffyurl.url import Url
+from datetime import datetime
 
 
 class TestClient(TestCase):
@@ -36,7 +37,7 @@ class TestClient(TestCase):
         response = Response(status=200, message='OK',
                 headers={'Last-Modified':'Sat, 02 Jul 2011 07:53:00 GMT'})
         self.assertTrue(response.last_modified)
-        self.assertEqual(response.last_modified, 1309618380)
+        self.assertIsInstance(response.last_modified, datetime)
 
     def test_content(self):
         response = Response(status=200, message='OK',
