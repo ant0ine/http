@@ -2,7 +2,7 @@ import sys
 sys.path.append('.')
 
 from datetime import datetime
-from fluffyhttp import Client, Request
+from http import Client, Request
 
 client = Client(agent='my uber agent')
 

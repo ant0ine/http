@@ -5,7 +5,7 @@ import logging
 
 
 MY_DIR = os.path.dirname(__file__)
-SOURCES_DIR = MY_DIR + "/../fluffyhttp"
+SOURCES_DIR = MY_DIR + "/../http"
 
 
 class TestPep8(unittest2.TestCase):

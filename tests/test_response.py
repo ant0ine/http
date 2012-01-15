@@ -1,6 +1,6 @@
 from unittest2 import TestCase
-from fluffyhttp.response import Response
-from fluffyhttp.request import Request
+from http.response import Response
+from http.request import Request
 from fluffyurl.url import Url
 from datetime import datetime
 

@@ -1,5 +1,5 @@
 from unittest2 import TestCase
-from fluffyhttp.headers import Headers
+from http.headers import Headers
 from datetime import datetime
 
 

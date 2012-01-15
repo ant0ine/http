@@ -7,11 +7,10 @@ except Exception:
     long_description = None
 
 setup(
-    name='fluffyhttp',
-    version='0.0.1',
+    name='http',
+    version='0.1.0',
     description='HTTP library',
     author='Franck Cuny',
     author_email='franck.cuny@gmail.com',
-
     long_description=long_description,
 )

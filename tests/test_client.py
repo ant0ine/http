@@ -1,7 +1,7 @@
 from unittest2 import TestCase
-from fluffyhttp.client import Client
-from fluffyhttp.request import Request
-from fluffyhttp.response import Response
+from http.client import Client
+from http.request import Request
+from http.response import Response
 
 
 tests = {

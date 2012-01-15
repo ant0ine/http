@@ -1,8 +1,8 @@
 from unittest2 import TestCase
-from fluffyhttp.client import Client
-from fluffyhttp.handlers import Handlers
-from fluffyhttp.request import Request
-from fluffyhttp.response import Response
+from http.client import Client
+from http.handlers import Handlers
+from http.request import Request
+from http.response import Response
 
 
 def _cb_request_prepare(request):

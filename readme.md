@@ -1,21 +1,21 @@
-# fluffyhttp (yet another http lib for Python)
+# http (yet another http lib for Python)
 
-fluffyhttp is heavily inspired by LWP.
+http is heavily inspired by the LWP and HTTP::Message distributions
 
 ## Synopsis
 
-    >>> from fluffyhttp import *
+    >>> from http import *
     >>> client = Client(agent='my fluffy client')
     >>> request = Request('GET', 'http://pypi.python.org')
     >>> response = client.request(request)
     >>> print response.status
     200
 
-## How to use fluffyhttp
+## How to use http
 
 ### Client
 
-    >>> from fluffyhttp import Client
+    >>> from http import Client
     >>> client = Client(agent='awesome_client/1.0')
 
 For basic usage
@@ -35,7 +35,7 @@ When you need full control
 
 ## Components
 
-`fluffyhttp' provides a few components to make your HTTP request:
+`http' provides a few components to make your HTTP request:
 
  * Client: to create a useragent
  * Headers: a class to manipulates HTTP headers
@@ -45,18 +45,18 @@ When you need full control
 
 ### Headers
 
-    >>> from fluffyhttp import Headers
+    >>> from http import Headers
     >>> h = Headers()
     >>> h.add('Content-Type', 'application/json')
 
 ### Request
 
-    >>> from fluffyhttp import Request
+    >>> from http import Request
     >>> r = Request('GET', 'htttp://lumberjaph.net')
 
 ### Response
 
-    >>> from fluffyhttp import Response
+    >>> from http import Response
     >>> r = Response(200)
 
 ### Doc
@@ -66,7 +66,7 @@ http://fluffyhttp.rtfd.org/
 ### Git
 
     git clone git://github.com/franckcuny/fluffyhttp.git
-    cd fluffyhttp
+    cd http
     virtualenv env
     source env/bin/activate
     pip install -r requirements.txt

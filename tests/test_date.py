@@ -1,6 +1,6 @@
 from unittest2 import TestCase
 from datetime import datetime
-from fluffyhttp.date import Date
+from http.date import Date
 import time
 
 
