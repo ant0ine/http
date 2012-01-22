@@ -3,6 +3,8 @@
 Request
 =======
 
+.. module:: http.request
+
 Synopsis
 --------
 
@@ -15,6 +17,7 @@ Interface
 ---------
 
 :class:`Request` instances have the following methods:
+
 .. autoclass:: Request()
    :members:
    :undoc-members:

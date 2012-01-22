@@ -3,6 +3,8 @@
 Exceptions:
 ===========
 
+.. module:: http.exception
+
 Synopsys
 --------
 
