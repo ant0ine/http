@@ -9,5 +9,5 @@ setup(
     author_email='franck.cuny@gmail.com',
     packages=['http'],
     provides=['http'],
-    requires=['fluffyurl', 'urllib3', 'coverage', 'nose', 'unittest2', 'pep8'],
+    requires=['coverage', 'nose', 'unittest2', 'pep8'],
 )
