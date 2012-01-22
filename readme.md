@@ -1,47 +1,21 @@
-# http (yet another http lib for Python)
+# http (yet another http library for Python)
 
-http is heavily inspired by the LWP and HTTP::Message distributions
+*http* is heavily inspired by the HTTP::Message distributions
 
 ## Synopsis
 
     >>> from http import *
-    >>> client = Client(agent='my fluffy client')
     >>> request = Request('GET', 'http://pypi.python.org')
-    >>> response = client.request(request)
-    >>> print response.status
-    200
-
-## How to use http
-
-### Client
-
-    >>> from http import Client
-    >>> client = Client(agent='awesome_client/1.0')
-
-For basic usage
-
-    >>> resp = client.get('http://lumberjaph.net')
-    >>> print resp.status
-    200
-
-When you need full control
-
-    >>> request = Request('GET', 'http://lumberjaph.net')
-    >>> from datetime import datetime
-    >>> request.if_modified_since = datetime(2011, 12, 1, 0, 0)
-    >>> resp = client.request(request)
-    >>> print resp.status
-    200
 
 ## Components
 
-`http' provides a few components to make your HTTP request:
+*http* provides a few components to make your HTTP request:
 
- * Client: to create a useragent
  * Headers: a class to manipulates HTTP headers
  * Request: a class to encapsulate a HTTP request
  * Response: a class to encapsulate a HTTP response
  * Date: a class to convert date to and from ISO 8601 
+ * Url: a class to manipulate url
 
 ### Headers
 
@@ -61,15 +35,13 @@ When you need full control
 
 ### Doc
 
-http://fluffyhttp.rtfd.org/
+http://http.rtfd.org/
 
 ### Git
 
-    git clone git://github.com/franckcuny/fluffyhttp.git
+    git clone git://github.com/franckcuny/http.git
     cd http
     virtualenv env
     source env/bin/activate
-    pip install -r requirements.txt
     pip install -r requirements-tests.txt
     ./run_tests.py tests/test_*
-    python eg/simple.py
