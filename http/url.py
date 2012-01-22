@@ -3,6 +3,8 @@ from urlparse import parse_qsl as queryexplode, urljoin
 from urllib import urlencode as queryimplode
 import re
 
+__author__ = "Damien 'bl0b' Leroux <damien.leroux@gmail.com>"
+
 
 class Url(object):
     __author__ = "Damien 'bl0b' Leroux <damien.leroux@gmail.com>"
@@ -12,7 +14,8 @@ class Url(object):
     Construct and deconstruct an URL in a simple and easy manner.
     Path is a list of path elements.
     Query is a list of 2-uples (key, value).
-    User can either configure netloc as a whole or username, password, host, and port independently.
+    User can either configure netloc as a whole or username, password, host,
+    and port independently.
     String representation of Url instance is the URL string itself.
     """
 
@@ -34,25 +37,26 @@ class Url(object):
 
         @property
         def is_absolute(self):
-            return len(self)>0 and self[0]==''
+            return len(self) > 0 and self[0] == ''
 
         @property
         def is_relative(self):
-            return len(self)>0 and self[0]!=''
+            return len(self) > 0 and self[0] != ''
 
         def canonify(self):
-            if len(self)>0 and self[0]=='':
+            if len(self) > 0 and self[0] == '':
                 tmp = self[1:]
                 init = self[:1]
             else:
                 tmp = self
                 init = []
+
             def _canon(a, b):
                 if b in ('.', ''):
                     return a
-                if b=='..':
+                if b == '..':
                     return a[:-1]
-                return a+[b]
+                return a + [b]
             canon = init + reduce(_canon, tmp, [])
             self.__init__(canon)
             return self
@@ -75,7 +79,9 @@ class Url(object):
         :param host: Default is an empty string
         :param port: Default is None
 
-        If netloc is not empty, it takes precedence over (username, password, host, port). Only host is mandatory if netloc is not provided."""
+        If netloc is not empty, it takes precedence over
+        (username, password, host, port). Only host is mandatory if netloc is
+        not provided."""
 
         if string_url is not None:
             p = urlexplode(string_url)
