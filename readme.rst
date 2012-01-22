@@ -44,8 +44,8 @@ Response
 Links
 -----
 
-`Documentation <http://readthedocs.org/docs/http/en/latest/>`_.
-`Repository <git://github.com/franckcuny/http.git>`_.
+- `Documentation <http://readthedocs.org/docs/http/en/latest/>`_.
+- `Repository <git://github.com/franckcuny/http.git>`_.
 
 How to get?
 -----------
