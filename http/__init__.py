@@ -1,8 +1,9 @@
-__all__ = ['Request', 'Client', 'Response', 'HTTPException', 'Headers', 'Date']
+__all__ = ['Request', 'Client', 'Response', 'HTTPException', 'Headers', 'Date', 'Url']
 
 from client import Client
 from request import Request
 from response import Response
 from headers import Headers
 from date import Date
+from url import Url
 from exception import *
