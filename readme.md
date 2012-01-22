@@ -4,12 +4,14 @@
 
 ## Synopsis
 
-    >>> from http import *
+    >>> from http import Request
     >>> request = Request('GET', 'http://pypi.python.org')
+    >>> print request.method
+    GET
 
 ## Components
 
-*http* provides a few components to make your HTTP request:
+*http* provides a few components to build HTTP messages:
 
  * Headers: a class to manipulates HTTP headers
  * Request: a class to encapsulate a HTTP request
@@ -33,11 +35,11 @@
     >>> from http import Response
     >>> r = Response(200)
 
-### Doc
+## Documentation
 
 http://http.rtfd.org/
 
-### Git
+## Git
 
     git clone git://github.com/franckcuny/http.git
     cd http
