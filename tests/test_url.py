@@ -1,5 +1,5 @@
 from unittest2 import TestCase
-from fluffyurl import Url
+from http.url import Url
 from itertools import product
 
 class Test_Url(TestCase):
@@ -75,7 +75,6 @@ class Test_Url(TestCase):
             tests = reduce(lambda a, b: a+b[1][1], f, tuple())
             url = Url(urlstr)
             for tname, predicate in tests:
-                print url
                 self.assertTrue(predicate(url), msg=msg+": "+tname)
             copy = Url(str(url))
             self.assertEqual(str(copy), str(url), msg="copy is not identical")

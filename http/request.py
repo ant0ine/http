@@ -1,5 +1,5 @@
 from headers import Headers
-from fluffyurl.url import Url
+from url import Url
 
 
 class Request(object):
