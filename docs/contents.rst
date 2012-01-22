@@ -6,7 +6,8 @@
 
    install
    tutorial
-   client
    request
    response
    headers
+   url
+   exceptions

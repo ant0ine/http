@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# fluffyhttp documentation build configuration file, created by
+# http documentation build configuration file, created by
 # sphinx-quickstart on Sun Dec  4 13:33:25 2011.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -13,7 +13,7 @@
 
 import sys, os
 try:
-    import fluffyhttp
+    import http
 except ImportError:
     sys.path.append(os.path.abspath('../'))
 
@@ -41,7 +41,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'fluffyhttp'
+project = u'http'
 copyright = u'2011, Franck Cuny'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -162,7 +162,7 @@ html_static_path = ['_static']
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'fluffyhttpdoc'
+htmlhelp_basename = 'httpdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -176,7 +176,7 @@ htmlhelp_basename = 'fluffyhttpdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'fluffyhttp.tex', u'fluffyhttp Documentation',
+  ('index', 'http.tex', u'http Documentation',
    u'Franck Cuny', 'manual'),
 ]
 
