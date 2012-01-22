@@ -9,10 +9,10 @@ This module is heavily inspired by LWP and HTTP::Message.
 
 ::
 
+    >>> from http import Request
     >>> req = Request('GET', 'http://google.com')
-    >>> ua = Client()
-    >>> resp = ua.request(req)
-    >>> print resp.status
+    >>> print req.method
+    GET
 
 User Guide
 ==========

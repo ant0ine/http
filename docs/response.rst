@@ -10,11 +10,9 @@ Synopsis
 
 ::
 
-    >>> response = ua.request(request)
-    >>> if response.is_success:
-    ...     print response.status
-    ... else:
-    ...     print response.message
+    >>> form http import Response
+    >>> r = Response(200)
+    >>> print r.status
     200
 
 Interface
@@ -24,3 +22,4 @@ Interface
 
 .. autoclass:: Response([defaults])
    :members:
+   :undoc-members:

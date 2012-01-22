@@ -3,15 +3,17 @@
 Getting started: How to use http
 ================================
 
-http is heavily inspired by LWP and HTTP::Message. It uses the following concept:
+http is heavily inspired by LWP and HTTP::Message. It provides the following abstraction:
 
-#. a Request object.
-#. a Response object.
+#. a class to create a HTTP Request
+#. a class to create a HTTP Response 
+#. a class to manipulate HTTP Headers
+#. a class to manipulate HTTP Dates
 
 Creating your first request
 ---------------------------
 
-    >>> from http import *
+    >>> from http import request
     >>> request = Request('GET', 'http://google.com')
 
 The Response object
