@@ -23,7 +23,8 @@ Synopsis
 Interface
 ---------
 
-:class:`Url` instances have the followin methods:
+:class:`Url` instances have the following methods:
 
 .. autoclass:: Url()
    :members:
+   :undoc-members:

@@ -2,7 +2,7 @@ def http_exception(response):
     raise HTTPException(response)
 
 
-class HTTPException(Exception):
+class Exception(Exception):
 
     def __init__(self, response):
         self._response = response
