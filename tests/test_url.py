@@ -48,10 +48,10 @@ class Test_Url(TestCase):
 
         },
         {   ' root': ('/', (
-                    ('path', lambda u: u.path == []),
+                    ('path', lambda u: u.path == ['']),
                     )),
             ' w_path': ('/foo/bar/wib.ble', (
-                    ('path', lambda u: u.path == ['foo', 'bar', 'wib.ble']),
+                    ('path', lambda u: u.path == ['', 'foo', 'bar', 'wib.ble']),
                     )),
         },
         {   ' vanilla': ( '', (
