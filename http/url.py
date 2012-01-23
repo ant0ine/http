@@ -3,11 +3,16 @@ from urlparse import parse_qsl as queryexplode, urljoin
 from urllib import urlencode as queryimplode
 import re
 
+"""
+
+:copyright: (c) 2012 by Damien 'bl0b' Leroux
+:license: MIT
+
+"""
+
 __author__ = "Damien 'bl0b' Leroux <damien.leroux@gmail.com>"
 
-
 class Url(object):
-    __author__ = "Damien 'bl0b' Leroux <damien.leroux@gmail.com>"
 
     """Handles URLs.
 
@@ -155,17 +160,3 @@ class Url(object):
     is_absolute = property(lambda s: bool(s.host))
     is_relative = property(lambda s: not bool(s.host))
     is_secure = property(lambda s: s.scheme.lower() == 'https')
-
-
-#if __name__=='__main__':
-#    # A REPL to generate the example output.
-#    import sys
-#    for k in open(sys.argv[1]).xreadlines():
-#        k=k.strip()
-#        if k:
-#            print '>>>', k
-#            if not k.startswith('#'):
-#                k = 'e='+k
-#                exec k
-#                if e:
-#                    print e

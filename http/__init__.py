@@ -1,3 +1,17 @@
+"""
+http
+
+:copyright: (c) 2012 by Franck Cuny
+:license: MIT
+
+"""
+
+__title__ = 'http'
+__version__ = '0.1.0'
+__author__ = 'Franck Cuny'
+__license__ = 'MIT'
+__copyright__ = 'Copyright 2012 Franck Cuny'
+
 __all__ = ['Request', 'Response', 'Exception', 'Headers', 'Date', 'Url']
 
 from request import Request
