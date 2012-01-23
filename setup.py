@@ -11,7 +11,7 @@ setup(
     url='https://github.com/franckcuny/http',
     packages=['http'],
     license='MIT',
-    requires=['coverage', 'nose', 'unittest2', 'pep8'],
+    tests_require=['coverage', 'nose', 'unittest2', 'pep8'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
