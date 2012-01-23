@@ -1,6 +1,6 @@
 from unittest2 import TestCase
 from datetime import datetime
-from http.date import Date
+from http import Date
 import time
 
 

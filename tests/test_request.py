@@ -1,7 +1,5 @@
 from unittest2 import TestCase
-from http.request import Request
-from http.headers import Headers
-from http.url import Url
+from http import Request, Headers, Url
 from datetime import datetime
 
 

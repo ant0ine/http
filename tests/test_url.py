@@ -1,5 +1,5 @@
 from unittest2 import TestCase
-from http.url import Url
+from http import Url
 from itertools import product
 
 class Test_Url(TestCase):
