@@ -1,4 +1,5 @@
 from headers import Headers
+from url import Url
 
 
 class Response(object):
@@ -98,13 +99,25 @@ class Response(object):
 
     @property
     def base(self):
-        """Property to get the base URI for this response"""
+        """Property to get the base URI for this response
+        
+        :return: Url if exists, None otherwise
+        """
+        url = None
         if self.header('Content-Base'):
-            return self.header('Content-Base')
+            url = self.header('Content-Base')
         if self.header('Content-Location'):
-            return self.header('Content-Location')
-        else:
-            return self.request.url
+            url = self.header('Content-Location')
+        if url is None and self.request:
+            url = self.request.url
+
+        if not url:
+            return None
+
+        if not isinstance(url, Url):
+            url = Url(url)
+
+        return url
 
     @property
     def request(self):

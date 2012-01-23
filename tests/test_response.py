@@ -22,16 +22,24 @@ class TestClient(TestCase):
         response = Response(status=200, message='OK', headers={},
                 request=request)
     
-    def test_base(self):
+    def test_base_url(self):
         response = Response(status=200, message='OK',
                 headers={'Content-Base':'http://foo'})
         self.assertEqual(response.base, 'http://foo')
+        self.assertIsInstance(response.base, Url)
+
         response = Response(status=200, message='OK',
                 headers={'Content-Location':'http://bar'})
         self.assertEqual(response.base, 'http://bar')
+        self.assertIsInstance(response.base, Url)
+
         request = Request('GET', 'http://baz')
         response = Response(status=200, message='OK', request=request)
         self.assertEqual(response.base, 'http://baz')
+        self.assertIsInstance(response.base, Url)
+
+        response = Response(status=200)
+        self.assertEqual(response.base, None)
 
     def test_date(self):
         response = Response(status=200, message='OK',
