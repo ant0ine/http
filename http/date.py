@@ -18,10 +18,15 @@ class Date:
         if isinstance(dt, datetime) is False:
             raise Exception("date is not a datetime object")
 
-        weekday = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dt.weekday()]
+        weekday = [
+            "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+        ][dt.weekday()]
+
         month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
              "Oct", "Nov", "Dec"][dt.month - 1]
-        return "%s, %02d %s %04d %02d:%02d:%02d GMT" % (weekday, dt.day, month, dt.year, dt.hour, dt.minute, dt.second)
+
+        return "{0}, {1} {2} {3} {4}:{5:02d}:{6:02d} GMT".format(
+            weekday, dt.day, month, dt.year, dt.hour, dt.minute, dt.second)
 
     @classmethod
     def time2epoch(cls, date):

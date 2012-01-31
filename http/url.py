@@ -12,6 +12,7 @@ import re
 
 __author__ = "Damien 'bl0b' Leroux <damien.leroux@gmail.com>"
 
+
 class Url(object):
 
     """Handles URLs.

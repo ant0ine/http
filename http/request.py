@@ -3,9 +3,10 @@ from url import Url
 
 
 class Request(object):
+    """
+    The Request class encapsulates HTTP style requests, consisting of a
+    request line, some headers, and a content body.
 
-    """The Request class encapsulates HTTP style requests, consisting of a request line, some headers, and a content body.
-    
     >>> r = Request()
     >>> r = Request('GET', 'http://www.google.com')
 
@@ -55,12 +56,15 @@ class Request(object):
 
     @property
     def headers(self):
-        """Return the Headers object of the reequest"""
+        """Return the Headers object of the request"""
         return self._headers
 
     @property
     def if_modified_since(self):
-        """Property to get the epoch for the *If-Modified-Since* header, and set the value of the header"""
+        """
+        Property to get the epoch for the "If-Modified-Since" header, and set
+        the value of the header
+        """
         return self._headers.if_modified_since
 
     @if_modified_since.setter
@@ -69,7 +73,10 @@ class Request(object):
 
     @property
     def if_unmodified_since(self):
-        """Property to get the epoch for the *If-Unmodified-Since* header, and set the value of the header"""
+        """
+        Property to get the epoch for the "If-Unmodified-Since" header, and
+        set the value of the header
+        """
         return self._headers.if_unmodified_since
 
     @if_unmodified_since.setter

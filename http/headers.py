@@ -4,7 +4,8 @@ import re
 
 
 class Headers(object):
-    """Class to manipulate HTTP headers
+    """
+    Class to manipulate HTTP headers
 
     :param headers: a list or a dict of headers
     """
@@ -57,7 +58,7 @@ class Headers(object):
             yield k, v
 
     def to_list(self):
-        return [(k, str(v)) for k, v in self._headers] 
+        return [(k, str(v)) for k, v in self._headers]
 
     def add(self, key, *values):
         """add a new header and one or multiple values
@@ -87,7 +88,7 @@ class Headers(object):
         if isinstance(value, datetime):
             value = Date.time2str(value)
         return value
-    
+
     def get_all(self, key):
         """get all the values for a given header
 
@@ -109,7 +110,10 @@ class Headers(object):
         return values
 
     def set(self, key, value):
-        """set a header to some specific value. If this header already exists, and there is more than one value for this header, the new value replace the first one
+        """
+        set a header to some specific value. If this header already exists,
+        and there is more than one value for this header, the new value
+        replace the first one
 
         >>> h = Headers([('Content-Type', 'application/json')])
         >>> h.add('Content-Type', 'application/xml')
@@ -118,7 +122,7 @@ class Headers(object):
         ['application/yaml', 'application/xml']
 
         :param key: header's name
-        :param value: new value 
+        :param value: new value
         """
 
         if not self._headers:
@@ -164,7 +168,9 @@ class Headers(object):
 
     @property
     def content_is_text(self):
-        """Property that will return True if the *Content-Type* header is set to *text*
+        """
+        Property that will return True if the "Content-Type" header is set to
+        text
 
         :return: boolean
         """
@@ -178,7 +184,8 @@ class Headers(object):
 
     @property
     def content_is_xhtml(self):
-        """Property that will return True if the *Content-Type* header is set to *xhtml*
+        """Property that will return True if the "Content-Type" header is
+        set to *xhtml*
 
         :return: boolean
         """
@@ -194,7 +201,9 @@ class Headers(object):
 
     @property
     def content_is_xml(self):
-        """Property that will return True if the *Content-Type* header is set to *xml*
+        """
+        Property that will return True if the "Content-Type" header is
+        set to * xml *
 
         :return: boolean
         """
@@ -212,7 +221,9 @@ class Headers(object):
 
     @property
     def last_modified(self):
-        """Property to get the epoch for the *Last-Modified* header, and set the value of the header
+        """
+        Property to get the epoch for the "Last-Modified" header, and set
+        the value of the header
 
         >>> headers = Headers()
         >>> headers.last_modified = datetime(2011, 12, 1, 0, 0)
@@ -231,7 +242,9 @@ class Headers(object):
 
     @property
     def date(self):
-        """Property to get the epoch for the *Date* header, and set the value of the header
+        """
+        Property to get the epoch for the * Date * header, and set the value
+        of the header
 
         :param date: datetime object
         :return: datetime
@@ -245,7 +258,9 @@ class Headers(object):
 
     @property
     def expires(self):
-        """Property to get the epoch for the *Expires* header, and set the value of the header
+        """
+        Property to get the epoch for the "Expires" header, and set the
+        value of the header
 
         :param date: datetime object
         :return: datetime
@@ -259,7 +274,9 @@ class Headers(object):
 
     @property
     def if_modified_since(self):
-        """Property to get the epoch for the *If-Modified-Since* header, and set the value of the header
+        """
+        Property to get the epoch for the *If-Modified-Since* header, and
+        set the value of the header
 
         :param date: datetime object
         :return: datetime
@@ -273,7 +290,9 @@ class Headers(object):
 
     @property
     def if_unmodified_since(self):
-        """Property to get the epoch for the *If-Unmodified-Since* header, and set the value of the header
+        """
+        Property to get the epoch for the "If-Unmodified-Since" header, and
+        set the value of the header
 
         :param date: datetime object
         :return: datetime
@@ -298,10 +317,15 @@ class Headers(object):
             return value
         else:
             print value
-            raise ValueError("date is of type <{type}> but can only be an instance of string, int or a datetime object".format(type=type(value)))
+            raise ValueError("date is of type <{type}> but can only be an "
+                "instance of string, int or a datetime object"
+                .format(type=type(value)))
 
     def _set_date_header(self, key, date):
-        # XXX for now we only document that the helpers can accept a datetime object, but you can also pass a string and a int. Let's see in the futur if this is usefull and document all the behavior
+        # XXX for now we only document that the helpers can accept a
+        # datetime object, but you can also pass a string and a int.
+        # Let's see in the futur if this is usefull and document all
+        # the behavior
         if isinstance(date, datetime):
             date = date
         elif isinstance(date, int):
@@ -309,5 +333,7 @@ class Headers(object):
         elif isinstance(date, str):
             date = Date.str2time(date)
         else:
-            raise ValueError("date is of type <{type}> but can only be an instance of string, int or a datetime object".format(type=type(date)))
+            raise ValueError("date is of type <{type}> but can only be an "
+                "instance of string, int or a datetime object"
+                .format(type=type(date)))
         self.set(key, date)

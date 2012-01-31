@@ -3,10 +3,11 @@ from url import Url
 
 
 class Response(object):
-    """The Response class encapsulates HTTP style responses.
+    """
+    The Response class encapsulates HTTP style responses.
 
     >>> r = Response(200)
-    >>> r = Response(200, headers={'Content-Type':'application/json'}, content='{"total":20}')
+    >>> r.content = '{"total":20}'
     print r.status
 
     :param status: HTTP status code for the response
@@ -16,7 +17,9 @@ class Response(object):
     :param request: origin Request object used
     """
 
-    def __init__(self, status, headers=Headers(), content=None, message=None, request=None):
+    def __init__(self, status, headers=Headers(), content=None,
+        message=None, request=None):
+
         self._status = status
         self.message = message
         self.redirects = list()
@@ -86,7 +89,7 @@ class Response(object):
         """
         if self.status >= 500 and self.status < 600:
             return True
-    
+
     @property
     def is_error(self):
         """Property that indicate if the response was an error
@@ -100,7 +103,7 @@ class Response(object):
     @property
     def base(self):
         """Property to get the base URI for this response
-        
+
         :return: Url if exists, None otherwise
         """
         url = None
@@ -165,15 +168,24 @@ class Response(object):
 
     @property
     def content_is_text(self):
-        """Property that will return True if the *Content-Type* header is set to *text*"""
+        """
+        Property that will return True if the "Content-Type" header is set
+        to text
+        """
         return self._headers.content_is_text
 
     @property
     def content_is_xml(self):
-        """Property that will return True if the *Content-Type* header is set to *xml*"""
+        """
+        Property that will return True if the "Content-Type" header is set to
+        XML
+        """
         return self._headers.content_is_xml
 
     @property
     def content_is_xhtml(self):
-        """Property that will return True if the *Content-Type* header is set to *xhtml*"""
+        """
+        Property that will return True if the "Content-Type" header is set
+        to XHTML
+        """
         return self._headers.content_is_xhtml
