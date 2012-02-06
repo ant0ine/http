@@ -49,3 +49,6 @@ class TestClient(TestCase):
         response = Response(status=200, message='OK',
                 headers={'Content-Type':'text/plain'})
         self.assertTrue(response.content_is_text)
+        
+        response.content = 'foo'
+        self.assertTrue(response.content, 'foo')

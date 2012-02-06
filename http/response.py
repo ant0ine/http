@@ -132,6 +132,10 @@ class Response(object):
         """Property to get the actual content of the response"""
         return self._content
 
+    @content.setter
+    def content(self, content):
+        self._content = content
+
     def header(self, name):
         """Method to get the value for a given header"""
         return self._headers.get(name)
