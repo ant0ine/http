@@ -1,6 +1,6 @@
 from urlparse import urlunparse as urlimplode, urlparse as urlexplode
 from urlparse import parse_qsl as queryexplode, urljoin
-from urllib import urlencode as queryimplode
+from urllib import urlencode as queryimplode, quote
 import re
 
 """
@@ -35,6 +35,7 @@ class Url(object):
 
         def append(self, path):
             parts = self._get_parts(path)
+            # TODO refactor this part
             for i in parts:
                 if i is not None and i is not '':
                     super(Url.Path, self).append(i)
@@ -49,7 +50,7 @@ class Url(object):
             return parts
 
         def __str__(self):
-            return Url.Path.SEP.join(self)
+            return quote(Url.Path.SEP.join(self))
 
         @property
         def is_absolute(self):
@@ -129,7 +130,10 @@ class Url(object):
         "Behave as a tuple or more precisely as a urlparse.ParseResult"
         yield self.scheme
         yield self.netloc
-        yield str(self.path)
+        path = str(self.path)
+        if path == '':
+            path = '/'
+        yield path
         yield self.params
         yield queryimplode(self.query)
         yield self.fragment
