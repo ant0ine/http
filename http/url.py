@@ -41,7 +41,8 @@ class Url(object):
                     super(Url.Path, self).append(i)
 
         def _get_parts(self, path):
-            if type(path) is str:
+            type_path = type(path)
+            if type_path is str or type_path is unicode:
                 parts = [x for (i, x)
                             in enumerate(path.split(Url.Path.SEP))
                             if x or not i]

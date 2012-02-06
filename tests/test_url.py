@@ -121,3 +121,9 @@ class Test_Url(TestCase):
         
         u = Url('http://foo.com')
         self.assertEqual(u, 'http://foo.com/')
+        
+    def test_path_unicode(self):
+        u = Url(host='foo.com', scheme='http')
+        u.path.append(unicode('/foo/bar/baz'))
+        self.assertEqual(len(u.path), 4)
+        self.assertEqual(str(u), 'http://foo.com/foo/bar/baz')
