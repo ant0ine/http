@@ -29,14 +29,24 @@ class Url(object):
 
         SEP = '/'   # necessary for splitting
 
-        def __init__(self, x):
-            if type(x) is str:
+        def __init__(self, path):
+            parts = self._get_parts(path)
+            list.__init__(self, parts)
+
+        def append(self, path):
+            parts = self._get_parts(path)
+            for i in parts:
+                if i is not None and i is not '':
+                    super(Url.Path, self).append(i)
+
+        def _get_parts(self, path):
+            if type(path) is str:
                 parts = [x for (i, x)
-                            in enumerate(x.split(Url.Path.SEP))
+                            in enumerate(path.split(Url.Path.SEP))
                             if x or not i]
             else:
-                parts = x
-            list.__init__(self, parts)
+                parts = path
+            return parts
 
         def __str__(self):
             return Url.Path.SEP.join(self)

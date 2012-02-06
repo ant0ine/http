@@ -102,37 +102,15 @@ class Test_Url(TestCase):
         self.assertEqual(Url('https://foob.ar/some/rville'), u+rel)
         self.assertEqual(u, rel+u)
 
+    def test_path_append(self):
+        u = Url(host='foo.com', scheme='http')
+        u.path.append('foo')
+        u.path.append('bar')
+        self.assertTrue(str(u), 'http://foo.com/foo/bar')
 
-## Url can be defined by a string
-#rel = Url('../c')
-#rel.path
-#rel.host
-#rel.is_absolute
-#rel.is_relative
-#example = Url('http://www.example.com')
-#example.host
-#example.is_absolute
-#example.is_relative
-## Url can be defined by named arguments
-#u=Url(host='foo.bar', path=('a','b'))
-#u
-#u.query.append(('arg', 'value'))
-#u
-#u.query.append(('more tricky', 'full #of:crap'))
-#u
-#repr(u)
-## username,password,host,port and netloc can be interchangeably edited
-#u.username = 'toto'
-#u.netloc
-#u.netloc='bl0b:pouet@example.com'
-#u.password
-#u.username
-#u.host
-#u.port
-#u.port = 80
-#u.netloc
-#u
-## Url can be appended to another one.
-#u+rel
-#u+example
-#rel+example
+        u = Url(host='foo.com', scheme='http')
+        u.path.append('foo/bar')
+        self.assertEqual(len(u.path), 2)
+        self.assertEqual(u.path[0], 'foo')
+        self.assertEqual(u.path[1], 'bar')
+        self.assertTrue(str(u), 'http://foo.com/foo/bar')
