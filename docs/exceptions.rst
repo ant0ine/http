@@ -11,8 +11,8 @@ Synopsys
 Interface
 ---------
 
-:class:`Exception` instances have the following methods:
+:class:`HTTException` instances have the following methods:
 
-.. autoclass:: Exception()
+.. autoclass:: HTTPException()
    :members:
    :undoc-members:
