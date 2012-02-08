@@ -14,10 +14,13 @@ class Response(object):
         Construct a new ``Response`` object.
 
         :param status: HTTP status code for the response
-        :param headers: a list of tuples or a class:`Headers` object
+        :type status: integer
+        :param headers: HTTP headers
+        :type status: a list of tuples or a class:`Headers` object
         :param content: content
         :param message: HTTP message for the response
         :param request: origin Request object used
+        :type request: class:`Request`
 
         .. attribute:: redirects
 
