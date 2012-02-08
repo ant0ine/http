@@ -4,21 +4,26 @@ from url import Url
 
 class Response(object):
     """
-    The Response class encapsulates HTTP style responses.
-
-    >>> r = Response(200)
-    >>> r.content = '{"total":20}'
-    print r.status
-
-    :param status: HTTP status code for the response
-    :param headers: headers
-    :param content: content, if any
-    :param message: HTTP message for the response
-    :param request: origin Request object used
+    The ``Response`` object encapsulates HTTP style responses.
     """
 
     def __init__(self, status, headers=Headers(), content=None,
         message=None, request=None):
+
+        """
+        Construct a new ``Response`` object.
+
+        :param status: HTTP status code for the response
+        :param headers: a list of tuples or a class:`Headers` object
+        :param content: content
+        :param message: HTTP message for the response
+        :param request: origin Request object used
+
+        .. attribute:: redirects
+
+           List of redirections
+
+        """
 
         self._status = status
         self.message = message
@@ -34,18 +39,20 @@ class Response(object):
 
     @property
     def status(self):
-        """Property to get the HTTP status
+        """
+        Returns the HTTP status
 
-        :return: int
+        :rtype: int
         """
 
         return int(self._status)
 
     @property
     def is_info(self):
-        """Property that indicate if the response was informational
+        """
+        Returns if the response was informational
 
-        :return: boolean
+        :rtype: boolean
         """
         if self.status >= 100 and self.status < 200:
             return True
@@ -53,9 +60,10 @@ class Response(object):
 
     @property
     def is_success(self):
-        """Property that indicate if the response was success
+        """
+        Returns if the response was success
 
-        :return: boolean
+        :rtypen: boolean
         """
         if self.status >= 200 and self.status < 300:
             return True
@@ -63,9 +71,10 @@ class Response(object):
 
     @property
     def is_redirect(self):
-        """Property that indicate if the response was redirect
+        """
+        Returns if the response was redirect
 
-        :return: boolean
+        :rtype: boolean
         """
         if self.status >= 300 and self.status < 400:
             return True
@@ -73,9 +82,10 @@ class Response(object):
 
     @property
     def is_client_error(self):
-        """Property that indicate if the response was a client error
+        """
+        Returns if the response was a client error
 
-        :return: boolean
+        :rtype: boolean
         """
         if self.status >= 400 and self.status < 500:
             return True
@@ -83,18 +93,20 @@ class Response(object):
 
     @property
     def is_server_error(self):
-        """Property that indicate if the response was a client server
+        """
+        Returns if the response was a client server
 
-        :return: boolean
+        :rtype: boolean
         """
         if self.status >= 500 and self.status < 600:
             return True
 
     @property
     def is_error(self):
-        """Property that indicate if the response was an error
+        """
+        Returns if the response was an error
 
-        :return: boolean
+        :rtype: boolean
         """
         if self.is_client_error or self.is_server_error:
             return True
@@ -102,10 +114,12 @@ class Response(object):
 
     @property
     def base(self):
-        """Property to get the base URI for this response
-
-        :return: Url if exists, None otherwise
         """
+        Returns the base URI for this response
+
+        :rtype: class:`Url` or None
+        """
+
         url = None
         if self.header('Content-Base'):
             url = self.header('Content-Base')
@@ -124,72 +138,114 @@ class Response(object):
 
     @property
     def request(self):
-        """Property to get the request object that caused that response"""
+        """
+        Returns the request object that caused that response
+
+        :rtype: class:`Request`
+        """
         return self._request
 
     @property
     def content(self):
-        """Property to get the actual content of the response"""
+        """
+        Returns the actual content of the response
+
+        :rtype: string
+        """
         return self._content
 
     @content.setter
     def content(self, content):
+        """
+        Set the actual content of the response
+        """
         self._content = content
 
     def header(self, name):
-        """Method to get the value for a given header"""
+        """
+        Returns the value for a given header
+
+        :rtype: string
+        """
         return self._headers.get(name)
 
     @property
     def headers(self):
-        """Property to get the Headers object"""
+        """
+        Returns the class:`Headers` object
+
+        :rtype: class:`Headers`
+        """
         return self._headers
 
     @property
     def status_line(self):
-        """Property to get the string '<code> <message>'"""
+        """
+        Returns the string '<code> <message>'
+
+        :rtype: string
+        """
         return "{0} {1}".format(self.status, self.message)
 
     @property
     def last_modified(self):
-        """Property to get the epoch for the *Last-Modified* header"""
+        """
+        Returns a datetime object represeting the *Last-Modified* header
+
+        :rtype: class:`datetime`
+        """
         return self._headers.last_modified
 
     @property
     def date(self):
-        """Property to get the epoch for the *Date* header"""
+        """
+        Returns a datetime object represeting the *Date* header
+
+        :rtype: class:`datetime`
+        """
         return self._headers.date
 
     @property
     def expires(self):
-        """Property to get the epoch for the *Expires* header"""
+        """
+        Returns a datetime object represeting the *Expires* header
+
+        :rtype: class:`datetime`
+        """
         return self._headers.expires
 
     @property
     def content_length(self):
-        """Property to get value for the *Content-Length* header"""
+        """
+        Returns the content-length of the actual response
+
+        :rtype: int
+        """
         return self._headers.content_length
 
     @property
     def content_is_text(self):
         """
-        Property that will return True if the "Content-Type" header is set
-        to text
+        Returns ``True`` if the "Content-Type" header is set to text
+
+        :rtype: boolean
         """
         return self._headers.content_is_text
 
     @property
     def content_is_xml(self):
         """
-        Property that will return True if the "Content-Type" header is set to
-        XML
+        Returns ``True`` if the "Content-Type" header is set to XML
+
+        :rtype: boolean
         """
         return self._headers.content_is_xml
 
     @property
     def content_is_xhtml(self):
         """
-        Property that will return True if the "Content-Type" header is set
-        to XHTML
+        Returns True if the "Content-Type" header is set to XHTML
+
+        :rtype: boolean
         """
         return self._headers.content_is_xhtml
