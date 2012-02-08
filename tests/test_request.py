@@ -22,14 +22,21 @@ class TestClient(TestCase):
         self.assertEqual(request.method, 'post')
 
     def test_headers(self):
-        request = Request('GET', 'http', {'Connection':'keep-alive'})
+        request = Request('GET', 'http', {'Connection': 'keep-alive'})
         self.assertIsInstance(request.headers, Headers)
 
-        headers = Headers({'Connection':'keep-alive'})
+        headers = Headers({'Connection': 'keep-alive'})
         request = Request('GET', 'http', headers)
         self.assertTrue(request)
 
         self.assertEqual(request.header('connection'), 'keep-alive')
+
+    def test_header(self):
+        request = Request('GET', 'http://lumberjaph.net')
+        request.header('If-Modified-Since',
+            'Wed, 08 Feb 2012 05:08:50 GMT')
+        self.assertEqual(request.header('If-Modified-Since'),
+            'Wed, 08 Feb 2012 05:08:50 GMT')
 
     def test_url(self):
         request = Request('GET', 'http')

@@ -55,7 +55,7 @@ class Request(object):
         if value is None:
             return self._headers.get(name)
         else:
-            self._headers[name] = value
+            self._headers.add(name, value)
 
     @property
     def headers(self):
