@@ -4,20 +4,21 @@ from url import Url
 
 class Request(object):
     """
-    The Request class encapsulates HTTP style requests, consisting of a
-    request line, some headers, and a content body.
-
-    >>> r = Request()
-    >>> r = Request('GET', 'http://www.google.com')
-
-    :param method: HTTP method
-    :param url: URL
-    :param headers: Header object, or list of headers
-    :param content: body
+    The ``Request`` object encapsulates HTTP style requests
     """
 
     def __init__(self, method, url, headers=None, content=None):
-        # XXX no content on GET / DELETE ?
+        """
+        Construct a new ``Request`` object
+
+        :param method: HTTP method
+        :type method: string
+        :param url: URL of the request
+        :type url: string or class:`Url`
+        :param headers: Headers for the request
+        :type headers: list of tuples or class:`Headers`
+        :param content: body
+        """
         self.method = method
         self.content = content
 
@@ -34,21 +35,23 @@ class Request(object):
 
     @property
     def method(self):
-        """Property to set or get the HTTP method"""
+        """
+        Returns the HTTP method
+
+        :rtype: string
+        """
         return self._method
 
     @method.setter
     def method(self, value):
+        """Set the HTTP method"""
         self._method = str(value)
 
     def header(self, name, value=None):
-        """Get or set the value for a given header
+        """Returns the value of the given header
 
-        >>> r.header('Content-Type', 'application/json')
-        >>> print r.header('Content-Type')
-        'application/json'
+        :rtype: string
         """
-
         if value is None:
             return self._headers.get(name)
         else:
@@ -56,29 +59,39 @@ class Request(object):
 
     @property
     def headers(self):
-        """Return the Headers object of the request"""
+        """
+        Returns the Headers used for the request
+
+        :rtype: class:`Headers`
+        """
         return self._headers
 
     @property
     def if_modified_since(self):
         """
-        Property to get the epoch for the "If-Modified-Since" header, and set
-        the value of the header
+        Returns a datetime object representing the value of the
+        "If-Modified-Since" header
+
+        :rtype: class:`datetime`
         """
         return self._headers.if_modified_since
 
     @if_modified_since.setter
     def if_modified_since(self, date):
+        """Set the value of the "If-Modified-Since" header"""
         self._headers.if_modified_since = date
 
     @property
     def if_unmodified_since(self):
         """
-        Property to get the epoch for the "If-Unmodified-Since" header, and
-        set the value of the header
+        Returns a datetime object representing the value of the
+        "If-Unmodified-Since" header
+
+        :rtype: class:`datetime`
         """
         return self._headers.if_unmodified_since
 
     @if_unmodified_since.setter
     def if_unmodified_since(self, date):
+        """Set the value of the "If-Unmodified-Since" header"""
         self._headers.if_unmodified_since = date
