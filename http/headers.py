@@ -6,11 +6,15 @@ import re
 class Headers(object):
     """
     Class to manipulate HTTP headers
-
-    :param headers: a list or a dict of headers
     """
 
     def __init__(self, headers=None):
+        """
+        Construct a new ``Header`` object
+
+        :param headers: headers
+        :type headers: a list or a dict
+        """
         if headers is None:
             headers = []
 
@@ -46,14 +50,19 @@ class Headers(object):
         return '\r\n'.join(strs)
 
     def items(self):
+        """
+        Returns a list of items
+
+        :rtype: list
+        """
         return list(self.iteritems())
 
     def iteritems(self):
-        """ return an iterator of headers
-
-        :return: iterator of headers
         """
+        Returns an iterator
 
+        :rtype: iterator
+        """
         for k, v in self._headers:
             yield k, v
 
@@ -61,46 +70,37 @@ class Headers(object):
         return [(k, str(v)) for k, v in self._headers]
 
     def add(self, key, *values):
-        """add a new header and one or multiple values
+        """
+        Adds a new header and one or multiple values
 
-        >>> headers = Headers()
-        >>> headers.add('Content-Type', 'application/json')
-        >>> headers.add('X-Custom', 'foo', 'bar')
-
-        :param key: header's name
+        :param key: name of the header
+        :type key: string
         :param \*values: one or many values for this header
         """
-
         for value in values:
             self._headers.append((key, value))
 
     def get(self, key):
-        """get the value for a given header
-
-        >>> headers.get('Content-Type')
-        'application/json'
-
-        :param key: header's name
-        :return: string
         """
+        Returns the value for a given header
 
+        :param key: name of the header
+        :type key: string
+        :rtype: string
+        """
         value = self.__getitem__(key)
         if isinstance(value, datetime):
             value = Date.time2str(value)
         return value
 
     def get_all(self, key):
-        """get all the values for a given header
-
-        >>> headers = Headers()
-        >>> headers.add('X-Custom', 'foo', 'bar')
-        >>> headers.get_all('X-Custom')
-        ['foo', 'bar']
-
-        :param key: header's name
-        :return: list
         """
+        Returns all the values for a given header
 
+        :param key: name of the header
+        :type key: string
+        :rtype: list
+        """
         return self.get_list(key)
 
     def get_list(self, key):
@@ -111,20 +111,14 @@ class Headers(object):
 
     def set(self, key, value):
         """
-        set a header to some specific value. If this header already exists,
+        Set a header to some specific value. If this header already exists,
         and there is more than one value for this header, the new value
         replace the first one
 
-        >>> h = Headers([('Content-Type', 'application/json')])
-        >>> h.add('Content-Type', 'application/xml')
-        >>> h.set('Content-Type', 'application/yaml')
-        >>> headers.get_all('Content-Type')
-        ['application/yaml', 'application/xml']
-
-        :param key: header's name
+        :param key: name of the header
+        :type key: string
         :param value: new value
         """
-
         if not self._headers:
             self._headers.append((key, value))
             return
@@ -137,44 +131,39 @@ class Headers(object):
         self._headers.append([key, value])
 
     def remove(self, key):
-        """remove a header
-
-        :param: header's name
         """
+        Removes a header
 
+        :param key: name of the header
+        :type key: string
+        """
         self.__delitem__(key)
 
     @property
     def content_type(self):
-        """Property to get the value for the *Content-Type* header
-
-        >>> h = Headers([('Content-Type', 'application/json')])
-        >>> h.content_type
-        'application/json'
-
-        :return: string
         """
+        Returns the value for the *Content-Type* header
 
+        :rtype: string
+        """
         return self.get('Content-Type')
 
     @property
     def content_length(self):
-        """Returns the value for the *Content-Length* header
-
-        :return: int
         """
+        Returns the value for the *Content-Length* header
 
-        return self.get('Content-Length')
+        :rtype: int
+        """
+        return int(self.get('Content-Length'))
 
     @property
     def content_is_text(self):
         """
-        Property that will return True if the "Content-Type" header is set to
-        text
+        Returns True if the "Content-Type" header is set to text
 
-        :return: boolean
+        :rtype: boolean
         """
-
         ct = self.content_type
         if ct is None:
             return False
@@ -184,12 +173,11 @@ class Headers(object):
 
     @property
     def content_is_xhtml(self):
-        """Property that will return True if the "Content-Type" header is
-        set to *xhtml*
-
-        :return: boolean
         """
+        Returns True if the "Content-Type" header is set to *xhtml*
 
+        :rtype: boolean
+        """
         ct = self.content_type
         if ct is None:
             return False
@@ -202,12 +190,10 @@ class Headers(object):
     @property
     def content_is_xml(self):
         """
-        Property that will return True if the "Content-Type" header is
-        set to * xml *
+        Returns True if the "Content-Type" header is set to *xml*
 
-        :return: boolean
+        :rtype: boolean
         """
-
         ct = self.content_type
         if ct is None:
             return False
@@ -222,86 +208,73 @@ class Headers(object):
     @property
     def last_modified(self):
         """
-        Property to get the epoch for the "Last-Modified" header, and set
-        the value of the header
+        Returns a datetime object represeting the *Last-Modified* header
 
-        >>> headers = Headers()
-        >>> headers.last_modified = datetime(2011, 12, 1, 0, 0)
-        >>> print type(headers.last_modified)
-        <type 'datetime.datetime'>
-
-        :param date: datetime object
-        :return: datetime
+        :rtype: datetime
         """
-
         return self._get_date_header('Last-Modified')
 
     @last_modified.setter
     def last_modified(self, date):
+        """Set the value of the *Last-Modified* header"""
         return self._set_date_header('Last-Modified', date)
 
     @property
     def date(self):
         """
-        Property to get the epoch for the * Date * header, and set the value
-        of the header
+        Returns a datetime object represeting the *Date* header
 
-        :param date: datetime object
-        :return: datetime
+        :rtype: datetime
         """
-
         return self._get_date_header('Date')
 
     @date.setter
     def date(self, date):
+        """Set the value of the *Date* header"""
         return self._set_date_header('Date', date)
 
     @property
     def expires(self):
         """
-        Property to get the epoch for the "Expires" header, and set the
-        value of the header
+        Returns a datetime object represeting the *Expires* header
 
-        :param date: datetime object
-        :return: datetime
+        :rtype: datetime
         """
-
         return self._get_date_header('Expires')
 
     @expires.setter
     def expires(self, date):
+        """Set the value of the *Expires* header"""
         return self._set_date_header('Expires', date)
 
     @property
     def if_modified_since(self):
         """
-        Property to get the epoch for the *If-Modified-Since* header, and
-        set the value of the header
+        Returns a datetime object represeting the *If-Modified-Since* header
 
-        :param date: datetime object
-        :return: datetime
+        :rtype: datetime
         """
 
         return self._get_date_header('If-Modified-Since')
 
     @if_modified_since.setter
     def if_modified_since(self, date):
+        """Set the value of the *If-Modified-Since* header"""
         return self._set_date_header('If-Modified-Since', date)
 
     @property
     def if_unmodified_since(self):
         """
-        Property to get the epoch for the "If-Unmodified-Since" header, and
-        set the value of the header
+        Returns a datetime object represeting the *If-Unmodified-Since* header
 
-        :param date: datetime object
-        :return: datetime
+        :rtype: datetime
         """
 
         return self._get_date_header('If-Unmodified-Since')
 
     @if_unmodified_since.setter
     def if_unmodified_since(self, date):
+        """Set the value of the *If-Unmodified-Since* header"""
         return self._set_date_header('If-Unmodified-Since', date)
 
     def _get_date_header(self, key):
