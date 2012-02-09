@@ -1,7 +1,7 @@
 http a HTTP library for Python
 ==============================
 
-http is heavily inspired by the `HTTP::Message <https://metacpan.org/module/HTTP::Message>`_ distribution.
+http is heavily inspired by the `HTTP::Message <https://metacpan.org/module/HTTP::Message>`__ distribution.
 
 Synopsis
 --------
@@ -44,8 +44,8 @@ Response
 Links
 -----
 
-- `Documentation <http://readthedocs.org/docs/http/en/latest/>`_.
-- `Repository <git://github.com/franckcuny/http.git>`_.
+- `Documentation <http://readthedocs.org/docs/http/en/latest/>`__.
+- `Repository <git://github.com/franckcuny/http.git>`__.
 
 How to get?
 -----------
