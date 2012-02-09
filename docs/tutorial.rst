@@ -92,6 +92,7 @@ Basic
 ~~~~~
 
     >>> from http import Headers
+    >>> headers = Headers()
     >>> headers.add('Content-Type', 'application/json')
     >>> print headers.get('Content-Type')
     application/json
