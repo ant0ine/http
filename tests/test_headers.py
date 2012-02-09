@@ -63,6 +63,12 @@ class TestHeaders(TestCase):
         test_ct('text/xml', 'content_is_xml')
         test_ct('application/xml', 'content_is_xml')
 
+    def test_content_params(self):
+        headers = Headers({'Content-type': 'text/html; charset=UTF-8'})
+        self.assertEqual(headers.content_type_params, {'charset': 'UTF-8'})
+        headers = Headers({'Content-type': 'text/html'})
+        self.assertEqual(headers.content_type_params, {})
+
     def test_date_header(self):
         headers = Headers([self.ct_headers])
         now = datetime(2011, 12, 12, 12, 0, 0)

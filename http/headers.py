@@ -149,6 +149,23 @@ class Headers(object):
         return self.get('Content-Type')
 
     @property
+    def content_type_params(self):
+        """
+        Returns the type parameters for the *Content-Type* header
+
+        :rtype: dictionary
+        """
+        type_str = self.get('Content-Type').split(';', 1)
+        if len(type_str) == 1:
+            return {}
+        else:
+            params = {}
+            for param in type_str[1].split(';'):
+                k, v = map(str.strip, param.split('='))
+                params[k] = v
+            return params
+
+    @property
     def content_length(self):
         """
         Returns the value for the *Content-Length* header
