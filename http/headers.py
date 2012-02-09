@@ -145,7 +145,12 @@ class Headers(object):
 
         :rtype: string
         """
-        return self.get('Content-Type')
+        ct = self.get('Content-Type')
+        if ct:
+            # Return only the type, scrubbing type parameters
+            return ct.split(';', 1)[0]
+        else:
+            return None
 
     @property
     def content_type_params(self):
