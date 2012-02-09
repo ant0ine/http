@@ -25,7 +25,7 @@ class Date:
         month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
              "Oct", "Nov", "Dec"][dt.month - 1]
 
-        return "{0}, {1} {2} {3} {4}:{5:02d}:{6:02d} GMT".format(
+        return "{0}, {1:02d} {2} {3} {4}:{5:02d}:{6:02d} GMT".format(
             weekday, dt.day, month, dt.year, dt.hour, dt.minute, dt.second)
 
     @classmethod
