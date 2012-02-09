@@ -1,4 +1,6 @@
 .tox/
 _build/
+dist/
+http.egg-info/
 
 *.pyc
