@@ -62,6 +62,8 @@ class TestHeaders(TestCase):
         test_ct('application/xhtml+xml', 'content_is_xhtml')
         test_ct('text/xml', 'content_is_xml')
         test_ct('application/xml', 'content_is_xml')
+        test_ct('application/xhtml+xml', 'content_is_xml')
+        test_ct('application/xhtml+xml; charset=UTF-8', 'content_is_xml')
 
     def test_content_params(self):
         headers = Headers({'Content-type': 'text/html; charset=UTF-8'})
