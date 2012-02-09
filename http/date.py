@@ -1,5 +1,6 @@
 import email.utils
 import time
+from calendar import timegm
 from datetime import datetime
 
 
@@ -11,7 +12,7 @@ class Date:
 
     @classmethod
     def str2epoch(cls, date):
-        return int(time.mktime(email.utils.parsedate(date)))
+        return int(timegm(email.utils.parsedate_tz(date)))
 
     @classmethod
     def time2str(cls, dt):
@@ -30,11 +31,11 @@ class Date:
 
     @classmethod
     def time2epoch(cls, date):
-        return int(time.mktime(date.timetuple()))
+        return date.strftime('%s')
 
     @classmethod
     def epoch2time(cls, epoch):
-        return datetime.fromtimestamp(epoch)
+        return datetime.utcfromtimestamp(epoch)
 
     @classmethod
     def epoch2str(cls, epoch):

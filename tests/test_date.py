@@ -17,7 +17,7 @@ class TestDate(TestCase):
 
     def test_str2epoch(self):
         epoch = Date.str2epoch('Mon, 12 Dec 2011 12:00:00 GMT')
-        self.assertEqual(epoch, 1323720000)
+        self.assertEqual(epoch, 1323691200)
 
     def test_epoch2time(self):
         time = Date.epoch2time(1323720000)
@@ -25,5 +25,5 @@ class TestDate(TestCase):
         pass
 
     def test_epoch2str(self):
-        string = Date.epoch2str(1323720000)
+        string = Date.epoch2str(1323691200)
         self.assertEqual(string, 'Mon, 12 Dec 2011 12:00:00 GMT')
