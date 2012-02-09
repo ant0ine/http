@@ -1,6 +1,5 @@
 from date import Date
 from datetime import datetime
-import re
 
 
 class Headers(object):
@@ -198,7 +197,7 @@ class Headers(object):
         ct = self.content_type
         if ct is None:
             return False
-        if re.search(r'^text/', ct):
+        if ct.startswith('text/'):
             return True
         return False
 
@@ -232,7 +231,7 @@ class Headers(object):
             return True
         if ct == 'application/xml':
             return True
-        if re.search(r'\+xml$', ct):
+        if ct.endswith('+xml'):
             return True
         return False
 
