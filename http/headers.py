@@ -158,6 +158,20 @@ class Headers(object):
         return int(self.get('Content-Length'))
 
     @property
+    def content_is_json(self):
+        """
+        Returns True if the "Content-Type" header is set to application/json
+
+        :rtype: boolean
+        """
+        ct = self.content_type
+        if ct is None:
+            return False
+        if ct == 'application/json':
+            return True
+        return False
+
+    @property
     def content_is_text(self):
         """
         Returns True if the "Content-Type" header is set to text

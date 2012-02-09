@@ -57,6 +57,7 @@ class TestHeaders(TestCase):
             method = getattr(headers, should_be)
             self.assertTrue(method)
 
+        test_ct('application/json', 'content_is_json')
         test_ct('text/html', 'content_is_text')
         test_ct('application/xhtml+xml', 'content_is_xhtml')
         test_ct('text/xml', 'content_is_xml')
