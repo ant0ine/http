@@ -6,7 +6,7 @@ setup(
     name='http',
     version=http.__version__,
     description='HTTP library for Python',
-    long_description=open('README').read(),
+    long_description=open('README.rst').read(),
     author='Franck Cuny',
     author_email='franck.cuny@gmail.com',
     url='https://github.com/franckcuny/http',
