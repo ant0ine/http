@@ -1,10 +1,10 @@
 from setuptools import setup
 
-import http
+from http import __version__
 
 setup(
     name='http',
-    version=http.__version__,
+    version=__version__,
     description='HTTP library for Python',
     long_description=open('README.rst').read(),
     author='Franck Cuny',
