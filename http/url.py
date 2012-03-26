@@ -102,7 +102,7 @@ class Url(object):
         not provided."""
 
         if string_url is not None:
-            p = urlexplode(string_url)
+            p = urlexplode(string_url, scheme=scheme)
             scheme, netloc, path, params, query, fragment = p
             self.username = p.username
             self.password = p.password

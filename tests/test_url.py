@@ -127,3 +127,8 @@ class Test_Url(TestCase):
         u.path.append(unicode('/foo/bar/baz'))
         self.assertEqual(len(u.path), 4)
         self.assertEqual(str(u), 'http://foo.com/foo/bar/baz')
+
+    def test_canonical(self):
+        u1 = Url("http://google.com")
+        u2 = Url("HTTP://google.com")
+        self.assertEqual(str(u1), str(u2))
