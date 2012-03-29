@@ -1,5 +1,8 @@
 from headers import Headers
 from url import Url
+import base64
+import random
+import re
 
 
 class Request(object):
@@ -21,6 +24,7 @@ class Request(object):
         """
         self.method = method
         self.content = content
+        self._parts = []
 
         if not isinstance(url, Url):
             url = Url(url)
@@ -95,3 +99,33 @@ class Request(object):
     def if_unmodified_since(self, date):
         """Set the value of the "If-Unmodified-Since" header"""
         self._headers.if_unmodified_since = date
+
+    def add_part(self, message):
+        self._parts.append(message)
+        pass
+
+    def _get_content(self):
+        parts = []
+        for part in self._parts:
+            parts.append(str(part))
+        print parts
+        bno = 0
+        boundary = self._boundary(3)
+        # hu weird stuff
+
+        b_line = "\015\012--{boundary}--\015\012".format(boundary=boundary)
+        b_line.join(parts)
+        content = "--{boundary}--\015\012{totalparts}\015\012--{boundary}--\015\012".format(
+            boundary=boundary, totalparts=b_line)
+        print content
+
+    def _boundary(self, size=None):
+        if size is None:
+            return 'xYzZY'
+        boundary = []
+        for i in range(1, size * 3):
+            boundary.append(chr(random.randrange(0, 255)))
+        b = ''.join(boundary)
+        b = base64.b64encode(b)
+        b = re.sub('[^a-zA-Z0-9]+', '', b)
+        return b

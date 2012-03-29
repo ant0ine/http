@@ -114,6 +114,10 @@ class Test_Url(TestCase):
         self.assertEqual(u.path[0], 'foo')
         self.assertEqual(u.path[1], 'bar')
         self.assertTrue(str(u), 'http://foo.com/foo/bar')
+        url = Url('http://lumberjaph.net/blog')
+        self.assertTrue(url)
+        url.path.append(('foo', 'bar', 'baz'))
+        self.assertEqual(str(url), 'http://lumberjaph.net/blog/foo/bar/baz')
         
     def test_final_slash(self):
         u = Url(host='foo.com', scheme='http')
@@ -127,3 +131,8 @@ class Test_Url(TestCase):
         u.path.append(unicode('/foo/bar/baz'))
         self.assertEqual(len(u.path), 4)
         self.assertEqual(str(u), 'http://foo.com/foo/bar/baz')
+
+    def test_query(self):
+        u = Url('http://lumberjaph.net')
+        u.query.append(('foo', 'bar'))
+        self.assertEqual(str(u), 'http://lumberjaph.net/?foo=bar')

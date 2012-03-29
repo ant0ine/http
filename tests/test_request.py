@@ -50,3 +50,13 @@ class TestClient(TestCase):
         request = Request('GET', 'http')
         request.if_modified_since = datetime(2011, 12, 12, 12, 0, 0)
         self.assertEqual(request._headers.get('If-Modified-Since'), 'Mon, 12 Dec 2011 12:00:00 GMT')
+
+    def test_multipart(self):
+        r_1 = Request('GET', 'http://lumberjaph.net')
+        r_2 = Request('GET', 'http://lumberjaph.net')
+        r = Request('GET', 'http://lumberjaph.net')
+        r.add_part(r_1)
+        r.add_part(r_2)
+        r._get_content()
+        self.assertTrue(False)
+        
