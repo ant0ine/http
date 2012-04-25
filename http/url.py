@@ -171,6 +171,21 @@ class Url(object):
 
     __repr__ = __str__
 
+    @property
+    def abs_path(self):
+        """Return a string representing the absolute path.
+        ("/" if self.path is empty)"""
+        path = str(self.path)
+        if path == '':
+            path = '/'
+        return path
+
+    @property
+    def abs_path_query(self):
+        """Return the absolute path and query components as a single string.
+        The path and the query are separated by a "?" character."""
+        return self.abs_path + "?" + queryimplode(self.query)
+
     path = property(lambda s: s._path, _path_set)
     netloc = property(_netloc_get, _netloc_set)
     is_absolute = property(lambda s: bool(s.host))

@@ -132,3 +132,33 @@ class Test_Url(TestCase):
         u1 = Url("http://google.com")
         u2 = Url("HTTP://google.com")
         self.assertEqual(str(u1), str(u2))
+
+    def test_abs_path(self):
+        tests = [
+            {
+                "url": "http://example.org/foo",
+                "expected": "/foo",
+            },
+            {
+                "url": "http://example.org",
+                "expected": "/",
+            },
+        ]
+        for test in tests:
+            u = Url(test["url"])
+            self.assertEquals(u.abs_path, test["expected"])
+
+    def test_abs_path_query(self):
+        tests = [
+            {
+                "url": "http://example.org/foo?bar=1",
+                "expected": "/foo?bar=1",
+            },
+            {
+                "url": "http://example.org?bar=1",
+                "expected": "/?bar=1",
+            },
+        ]
+        for test in tests:
+            u = Url(test["url"])
+            self.assertEquals(u.abs_path_query, test["expected"])
