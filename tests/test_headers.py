@@ -25,7 +25,7 @@ class TestHeaders(TestCase):
         self.assertTrue(headers.get('User-Agent'))
         self.assertTrue(headers.get('user-agent'))
         self.assertEqual(headers.get('user-agent'), 'fluffy')
-        
+
     def test_remove(self):
         headers = Headers([self.ct_headers])
         headers.remove('Content-Type')
@@ -38,7 +38,7 @@ class TestHeaders(TestCase):
 
         headers.add('X-Foo', 'bar')
         headers.add('X-Foo', 'baz')
-        
+
         self.assertEqual(headers.get('X-Foo'), 'bar')
         self.assertEqual(headers.get_all('X-Foo'), ['bar', 'baz'])
 

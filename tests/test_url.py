@@ -114,14 +114,14 @@ class Test_Url(TestCase):
         self.assertEqual(u.path[0], 'foo')
         self.assertEqual(u.path[1], 'bar')
         self.assertTrue(str(u), 'http://foo.com/foo/bar')
-        
+
     def test_final_slash(self):
         u = Url(host='foo.com', scheme='http')
         self.assertEqual(u, 'http://foo.com/')
-        
+
         u = Url('http://foo.com')
         self.assertEqual(u, 'http://foo.com/')
-        
+
     def test_path_unicode(self):
         u = Url(host='foo.com', scheme='http')
         u.path.append(unicode('/foo/bar/baz'))

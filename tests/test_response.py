@@ -19,7 +19,7 @@ class TestClient(TestCase):
         request = Request('GET', 'http://foobar')
         response = Response(status=200, message='OK', headers={},
                 request=request)
-    
+
     def test_base_url(self):
         response = Response(status=200, message='OK',
                 headers={'Content-Base':'http://foo'})
@@ -49,6 +49,6 @@ class TestClient(TestCase):
         response = Response(status=200, message='OK',
                 headers={'Content-Type':'text/plain'})
         self.assertTrue(response.content_is_text)
-        
+
         response.content = 'foo'
         self.assertTrue(response.content, 'foo')
